@@ -1,23 +1,562 @@
-<h1>All Articles</h1>
-<%= link_to 'New article', new_article_path %>
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Text</th>
-    <th colspan="3"></th>
-  </tr>
 
-  <% @articles.each do |article| %>
-      <tr>
-        <td><%= article.title %></td>
-        <td><%= article.body %></td>
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=320, maximum-scale=1, user-scalable=no" />
+  <meta name="author" content="Opendesk (info@opendesk.cc)" />
 
-        <td><button class="button"><%= link_to 'Show', article_path(article) %></button></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
-        <td><%= link_to 'Destroy', article_path(article),
-                        method: :delete,
-                        data: {confirm: 'Are you sure?'} %></td>
+  <title>Opendesk - Blog</title>
+  <meta property="og:title" content="Opendesk - Blog" />
+  <meta name="twitter:title" content="Opendesk - Blog" />
 
-      </tr>
-  <% end %>
-</table>
+
+
+  <meta name="description" content="The Blog section from Opendesk documenting Open Making " />
+  <meta property="og:description" content="The Blog section from Opendesk documenting Open Making " />
+  <meta name="twitter:description" content="The Blog section from Opendesk documenting Open Making " />
+
+
+
+  <meta property="og:image" content="https://d2mgbjyendvdw0.cloudfront.net/01377/0653/MetaAbout.png" />
+  <meta name="twitter:image" content="https://d2mgbjyendvdw0.cloudfront.net/01377/0653/MetaAbout.png" />
+
+
+  <meta name="keywords" content="Blog, Opendesk, Open Making, Articles, CNC, CAD, Events, Makers, Designers, Workspaces, Workspace Furniture" />
+
+
+  <meta property="og:site_name" content="Opendesk.cc" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.opendesk.cc/blog" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@open_desk" />
+  <meta name="twitter:url" content="https://www.opendesk.cc/blog" />
+
+  <meta name="p:domain_verify" content="334c4bf7c524a3f470e92f4d72757091" />
+
+
+  <link rel="stylesheet" type="text/css"
+        href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
+  />
+
+  <link rel="stylesheet" href="/assets/css/style-325f130d587c9fea2103055c3434d2da.css" />
+  <link rel="stylesheet" href="/assets/css/main-0a99201c11a49d3e599626b2ed8df0c3.css" />
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="//html5shim.googlecode.com/svn/trunk/html5.js">
+  </script>
+  <![endif]-->
+
+  <script type="text/javascript" src="/assets/js/jquery-0ab883bf92d13b796b97afd7c0e650d7.js"></script>
+
+</head>
+<body >
+<svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <symbol id="icon-account" viewBox="0 0 1024 1024">
+      <title>account</title>
+      <path class="path1" d="M38.219 511.728c0-261.497 211.993-473.509 473.509-473.509 261.497 0 473.49 212.012 473.49 473.509s-211.993 473.509-473.49 473.509c-261.516 0-473.509-212.012-473.509-473.509v0zM1.283 511.728c0 281.907 228.538 510.445 510.445 510.445s510.445-228.538 510.445-510.445c0-281.907-228.538-510.445-510.445-510.445s-510.445 228.538-510.445 510.445v0z"></path>
+      <path class="path2" d="M515.542 529.756c-112.384 0-337.153 56.764-337.153 169.201 0 66.589 53.464 121.17 121.113 121.17h434.262c66.558 0 121.113-53.489 121.113-121.17-2.182-112.437-226.951-169.201-339.335-169.201zM515.542 573.421c112.908 0 293.683 57.626 295.691 125.994-0.251 42.529-34.905 77.046-77.469 77.046h-434.262c-42.717 0-77.469-34.768-77.469-77.505 0-68.084 180.284-125.536 293.509-125.536z"></path>
+      <path class="path3" d="M516.531 186.492c-88.227 0-157.96 77.767-142.837 168.6 8.729 62.222 58.92 111.345 120.022 120.078 7.409 1.070 14.73 1.594 21.91 1.594 88.096 0 156.978-77.767 142.848-168.611-9.82-61.131-58.92-110.253-120.022-120.078-7.398-1.070-14.73-1.583-21.92-1.583zM516.531 230.157c5.063 0 10.224 0.371 15.341 1.092 42.379 6.965 76.694 41.394 83.481 83.618 4.768 30.696-3.372 60.192-22.935 83.050-19.149 22.356-47.136 35.183-76.792 35.183-5.161 0-10.431-0.382-15.734-1.146-42.182-6.037-77.076-40.903-82.968-82.919l-0.175-1.113c-5.019-30.14 2.804-59.242 22.040-81.948 19.269-22.76 47.605-35.816 77.742-35.816z"></path>
+    </symbol>
+    <symbol id="icon-logo-text" viewBox="0 0 4000 1024">
+      <title>logo-text</title>
+      <path class="path1" d="M322.015 414.158c0-64.35-52.639-116.686-114.935-116.686h-10.739c-62.32 0-114.947 52.336-114.947 116.686v198.469c0 63.238 52.627 116.674 114.947 116.674h10.739c62.296 0 114.935-53.435 114.935-116.674v-198.469zM207.081 782.748h-10.739c-92.386 0-167.598-76.35-167.598-170.121v-198.469c0-94.87 75.213-170.121 167.598-170.121h10.739c92.386 0 167.561 75.252 167.561 170.121v198.469c0 93.771-75.176 170.121-167.561 170.121v0z"></path>
+      <path class="path2" d="M839.905 413.072c0-63.263-50.498-115.6-113.865-115.6h-9.669c-63.391 0-114.947 55.621-114.947 118.859v194.123c0 64.312 50.486 118.846 114.947 118.846h9.669c63.366 0 113.865-51.25 113.865-115.587v-200.642zM726.040 782.748h-9.669c-44.052 0-94.526-21.816-114.947-53.448v255.176c0 18.519-13.962 27.248-26.867 27.248-12.892 0-26.855-8.729-26.855-27.248v-713.166c0-18.544 13.962-27.273 26.855-27.273 12.904 0 26.867 8.729 26.867 27.273v26.162c20.421-28.36 70.895-53.435 114.947-53.435h9.669c93.456 0 167.561 76.338 167.561 170.121v198.469c0 94.857-75.188 170.121-167.561 170.121v0z"></path>
+      <path class="path3" d="M1349.195 414.146c0-64.337-53.722-116.674-113.877-116.674h-10.739c-63.391 0-116.017 52.336-116.017 116.674v71.967h240.634v-71.967zM1374.967 540.647h-266.406v71.967c0 63.238 52.627 116.686 114.947 116.686h10.739c49.404 0 91.316-32.718 106.348-78.523 4.281-13.087 13.95-18.532 24.702-18.532 13.962 0 29.020 9.803 29.020 26.174 0 3.259-1.107 6.531-2.177 9.815-22.549 67.609-84.845 114.501-157.892 114.501h-10.739c-92.386 0-167.586-76.338-167.586-170.121v-198.469c0-93.771 75.2-170.121 166.516-170.121h10.739c93.456 0 168.632 71.967 168.632 170.121v99.228c0 14.186-12.88 27.273-26.842 27.273v0z"></path>
+      <path class="path4" d="M1883.188 782.748c-12.892 0-26.842-8.729-26.842-27.273v-342.403c0-64.35-50.511-115.6-113.877-115.6h-9.669c-64.461 0-114.947 54.534-114.947 118.859v339.144c0 18.544-13.95 27.273-26.867 27.273-12.892 0-26.842-8.729-26.842-27.273v-484.165c0-18.544 13.95-27.273 26.842-27.273 12.917 0 26.867 8.729 26.867 27.273v26.162c20.421-31.619 70.895-53.435 114.947-53.435h9.669c92.386 0 167.561 75.252 167.561 170.121v341.317c0 18.544-13.95 27.273-26.842 27.273z"></path>
+      <path class="path5" d="M2364.566 416.331c0-64.325-50.511-118.859-114.947-118.859h-9.669c-63.391 0-113.877 51.25-113.877 115.6v200.642c0 63.238 50.486 115.587 113.877 115.587h9.669c63.366 0 114.947-55.621 114.947-118.846v-194.123zM2391.408 782.748c-12.892 0-26.842-8.729-26.842-27.273v-26.174c-20.421 28.347-70.919 53.448-114.947 53.448h-9.669c-93.481 0-167.598-76.35-167.598-170.121v-198.469c0-94.87 75.213-170.121 167.598-170.121h9.669c44.028 0 94.526 21.816 114.947 53.435v-254.089c0-18.544 13.95-27.248 26.842-27.248s26.842 8.704 26.842 27.248v712.092c0 18.544-13.95 27.273-26.842 27.273v0z"></path>
+      <path class="path6" d="M2905.004 414.146c0-64.337-53.722-116.674-113.877-116.674h-10.739c-63.391 0-116.017 52.336-116.017 116.674v71.967h240.634v-71.967zM2930.776 540.647h-266.406v71.967c0 63.238 52.627 116.686 114.947 116.686h10.739c49.404 0 91.316-32.718 106.348-78.523 4.281-13.087 13.95-18.532 24.702-18.532 13.962 0 29.020 9.803 29.020 26.174 0 3.259-1.107 6.531-2.177 9.815-22.549 67.609-84.845 114.501-157.892 114.501h-10.739c-92.386 0-167.598-76.338-167.598-170.121v-198.469c0-93.771 75.213-170.121 166.528-170.121h10.739c93.456 0 168.632 71.967 168.632 170.121v99.228c0 14.186-12.88 27.273-26.842 27.273v0z"></path>
+      <path class="path7" d="M3274.646 782.748h-19.338c-65.531 0-138.579-42.533-169.739-107.982-1.070-4.346-3.211-8.704-3.211-11.988 0-15.26 15.033-27.261 28.983-27.261 9.681 0 19.351 5.445 23.644 16.359 21.479 45.793 75.2 77.424 120.323 77.424h19.338c73.035 0 121.381-47.978 121.381-101.426 0-176.652-291.12-51.237-291.12-252.99v-5.445c0-71.967 70.907-125.403 163.293-125.403h2.14c90.233 0 151.459 45.793 151.459 70.868 0 14.199-11.822 27.286-25.772 27.286-5.364 0-11.822-2.185-18.256-7.643-27.937-26.174-60.168-37.076-107.431-37.076h-5.364c-44.052 0-107.443 21.816-107.443 73.054v4.358c0 139.576 292.202 30.545 292.202 252.99 0 107.982-99.902 154.874-175.090 154.874z"></path>
+      <path class="path8" d="M3964.39 290.916l-156.847 169.035 158.987 281.338c3.223 5.445 4.318 9.815 4.318 14.174 0 15.273-13.987 27.273-29.020 27.273-8.599 0-17.198-4.371-22.561-14.199l-150.388-266.078-96.691 103.599v149.404c0 18.544-12.892 27.273-25.772 27.273-13.962 0-26.855-8.729-26.855-27.273v-712.080c0-18.544 12.892-27.261 26.855-27.261 12.88 0 25.772 8.716 25.772 27.261v481.979l252.443-272.609c6.458-6.556 12.917-8.729 19.338-8.729 15.045 0 27.949 13.087 27.949 28.36 0 5.445-1.070 12.001-7.529 18.532z"></path>
+    </symbol>
+    <symbol id="icon-basket-tag" viewBox="0 0 1024 1024">
+      <title>basket-tag</title>
+      <path class="path1" d="M792.18 273.554c-9.295 9.451-18.406 18.715-27.23 27.687l8.763 8.645c2.747 2.756 20.236 20.248 20.236 20.248l-0.262 174.38-341.849 341.849-272.851-272.96 341.858-341.693h174.373l26.917 26.926 27.676-27.792-32.828-32.619c-3.629-3.72-8.603-5.988-13.797-5.988h-190.571c-0.618 0-1.238 0.174-1.855 0.209-4.549 0.474-8.777 2.642-11.942 5.944l-360.968 361.010c-7.521 7.56-7.521 19.802 0 27.369l300.455 300.457c7.558 7.523 19.774 7.53 27.332 0.007l361.231-360.963c3.62-3.676 5.631-8.64 5.577-13.797l0.262-190.297c-0.019-5.201-2.12-10.177-5.84-13.804l-34.686-34.816z"></path>
+      <path class="path2" d="M511.603 986.98c-262.109 0-474.583-212.493-474.583-474.583s212.474-474.581 474.583-474.581c123.8 0 236.511 47.427 321.009 125.084l-204.805 207.045c-8.085 7.022-8.951 19.256-1.937 27.341 7.012 8.088 19.916 9.464 27.341 1.939 4.105-4.163 111.251-113.111 206.196-209.653 78.644 84.697 126.76 198.136 126.76 322.825 0 262.091-212.474 474.583-474.565 474.583zM511.603 0.794c-282.545 0-511.603 229.058-511.603 511.603 0 282.547 229.058 511.603 511.603 511.603s511.603-229.056 511.603-511.603c0-282.545-229.058-511.603-511.603-511.603z"></path>
+      <path class="path3" d="M648.42 333.526c-3.1-0.557-6.29-0.85-9.548-0.85-29.643 0-53.761 24.119-53.761 53.763s24.119 53.763 53.761 53.763c29.647 0 53.766-24.119 53.766-53.763 0-3.629-0.362-7.175-1.050-10.605l30.381-30.89c6.265 12.495 9.794 26.589 9.794 41.494 0 51.219-41.671 92.889-92.891 92.889-51.216 0-92.884-41.671-92.884-92.889s41.668-92.887 92.884-92.887c14.343 0 27.938 3.267 40.078 9.098l-30.53 30.876z"></path>
+      <path class="path4" d="M283.034 617.346c-4.461 0-8.921-1.702-12.323-5.108-6.794-6.806-6.787-17.833 0.016-24.629l177.496-177.256c6.801-6.796 17.828-6.79 24.627 0.016 6.796 6.806 6.79 17.833-0.016 24.627l-177.493 177.259c-3.399 3.395-7.853 5.092-12.307 5.092z"></path>
+      <path class="path5" d="M336.44 670.752c-4.461 0-8.921-1.702-12.323-5.108-6.794-6.806-6.787-17.833 0.016-24.629l177.484-177.247c6.801-6.796 17.828-6.79 24.627 0.016 6.796 6.806 6.79 17.833-0.016 24.629l-177.482 177.247c-3.399 3.395-7.853 5.092-12.307 5.092z"></path>
+      <path class="path6" d="M426.971 761.339c-4.461 0-8.921-1.702-12.323-5.108-6.794-6.806-6.787-17.833 0.016-24.629l129.161-128.989c6.806-6.794 17.833-6.792 24.629 0.014 6.794 6.806 6.787 17.833-0.016 24.629l-129.161 128.991c-3.399 3.395-7.853 5.092-12.307 5.092z"></path>
+    </symbol>
+    <symbol id="icon-od-logo" viewBox="0 0 993 1024">
+      <title>od-logo</title>
+      <path class="path1" d="M35.926 503.996c0-258.193 206.195-467.526 460.559-467.526 254.346 0 460.541 209.333 460.541 467.526s-206.195 467.526-460.541 467.526c-254.364 0-460.559-209.333-460.559-467.526v0zM0 503.996c0 278.345 222.288 503.996 496.485 503.996s496.485-225.651 496.485-503.996c0-278.345-222.288-503.996-496.485-503.996s-496.485 225.651-496.485 503.996v0z"></path>
+      <path class="path2" d="M768.553 339.55l-359.011-146.717c-6.821-2.792-14.601-1.047-19.631 4.39l-176.556 190.633c-3.094 3.361-4.831 7.788-4.831 12.398v266.508c0 9.992 7.979 18.092 17.822 18.092 4.921 0 9.608-2.075 12.973-5.694l170.712-184.351 157.504 64.377v254.294c0 9.992 7.979 18.092 17.822 18.092 4.921 0 9.608-2.057 12.973-5.694l176.556-190.651c3.094-3.361 4.831-7.788 4.831-12.398v-266.508c0-7.384-4.415-14.014-11.164-16.769v0zM244.168 621.119v-194.086l130.382 53.283-130.382 140.803zM580.724 525.573l-323.547-132.225 150.357-162.348 323.529 132.225-150.339 162.348zM744.090 615.664l-140.912 152.172v-213.702l140.912-152.172v213.702z"></path>
+    </symbol>
+    <symbol id="icon-arrow-right2" viewBox="0 0 1024 1024">
+      <title>arrow-right2</title>
+      <path class="path1" d="M621.254 877.254l320-320c24.994-24.992 24.994-65.516 0-90.51l-320-320c-24.994-24.992-65.516-24.992-90.51 0-24.994 24.994-24.994 65.516 0 90.51l210.746 210.746h-613.49c-35.346 0-64 28.654-64 64s28.654 64 64 64h613.49l-210.746 210.746c-12.496 12.496-18.744 28.876-18.744 45.254s6.248 32.758 18.744 45.254c24.994 24.994 65.516 24.994 90.51 0z"></path>
+    </symbol>
+    <symbol id="icon-google-plus" viewBox="0 0 1024 1024">
+      <title>google-plus</title>
+      <path class="path1" d="M0.806 869.664c-0.244-2.532-0.452-5.070-0.584-7.63 0.13 2.56 0.34 5.098 0.584 7.63zM235.908 565.148c92.010 2.738 153.734-92.698 137.862-213.198-15.894-120.48-103.396-217.168-195.408-219.922-92.026-2.73-153.74 89.482-137.852 210 15.882 120.468 103.352 220.374 195.398 223.12zM1024 256v-85.31c0-93.88-76.782-170.69-170.658-170.69h-682.656c-92.276 0-168.012 74.232-170.564 165.926 58.362-51.386 139.324-94.316 222.874-94.316 89.304 0 357.244 0 357.244 0l-79.948 67.618h-113.268c75.13 28.804 115.156 116.124 115.156 205.722 0 75.248-41.81 139.954-100.888 185.968-57.644 44.902-68.572 63.708-68.572 101.878 0 32.578 61.746 88 94.032 110.788 94.382 66.538 124.916 128.312 124.916 231.456 0 16.428-2.042 32.83-6.066 48.96h307.742c93.874 0 170.656-76.75 170.656-170.69v-533.308h-192v191.998h-64v-192h-191.998v-64h191.998v-192h64v192h192zM185.886 765.936c21.614 0 41.422-0.59 61.936-0.59-27.146-26.334-48.626-58.6-48.626-98.38 0-23.608 7.564-46.336 18.134-66.52-10.782 0.77-21.79 0.994-33.126 0.994-74.356 0-137.506-24.076-184.204-63.854v67.242l0.006 201.73c53.44-25.374 116.888-40.622 185.88-40.622zM3.42 887.258c-1.112-5.458-1.966-11.006-2.542-16.634 0.574 5.628 1.43 11.176 2.542 16.634zM455.45 952.846c-15.058-58.806-68.454-87.964-142.888-139.568-27.072-8.732-56.894-13.874-88.894-14.208-89.618-0.964-173.108 34.942-220.216 88.372 15.92 77.706 85.034 136.558 167.234 136.558h286.444c1.816-11.128 2.696-22.632 2.696-34.432 0-12.534-1.534-24.792-4.376-36.722z"></path>
+    </symbol>
+    <symbol id="icon-facebook" viewBox="0 0 1024 1024">
+      <title>facebook</title>
+      <path class="path1" d="M853.35 0h-682.702c-94.25 0-170.648 76.42-170.648 170.686v682.63c0 94.266 76.398 170.684 170.648 170.684h341.352v-448h-128v-128h128v-96c0-88.366 71.634-160 160-160h160v128h-160c-17.674 0-32 14.328-32 32v96h176l-32 128h-144v448h213.35c94.25 0 170.65-76.418 170.65-170.684v-682.63c0-94.266-76.4-170.686-170.65-170.686z"></path>
+    </symbol>
+    <symbol id="icon-instagram" viewBox="0 0 1024 1024">
+      <title>instagram</title>
+      <path class="path1" d="M854 0h-684c-93.5 0-170 76.5-170 170v684c0 93.5 76.5 170 170 170h684c93.5 0 170-76.5 170-170v-684c0-93.5-76.5-170-170-170zM327.8 448h368.4c6.988 20.058 10.8 41.59 10.8 64 0 107.524-87.476 195-195 195s-195-87.476-195-195c0-22.41 3.812-43.942 10.8-64zM896 448.050v383.95c0 35.2-28.8 64-64 64h-640c-35.2 0-64-28.8-64-64v-384h100.108c-4.642 20.602-7.108 42.016-7.108 64 0 160.458 130.542 291 291 291s291-130.542 291-291c0-21.984-2.464-43.398-7.108-64l100.108 0.050zM896 224c0 17.6-14.4 32-32 32h-64c-17.6 0-32-14.4-32-32v-64c0-17.6 14.4-32 32-32h64c17.6 0 32 14.4 32 32v64z"></path>
+    </symbol>
+    <symbol id="icon-twitter" viewBox="0 0 1024 1024">
+      <title>twitter</title>
+      <path class="path1" d="M853.342 0h-682.656c-93.874 0-170.686 76.81-170.686 170.69v682.624c0 93.936 76.812 170.686 170.686 170.686h682.656c93.876 0 170.658-76.75 170.658-170.69v-682.62c0-93.88-76.782-170.69-170.658-170.69zM766.478 381.48c0.252 5.632 0.38 11.296 0.38 16.988 0 173.51-132.070 373.588-373.584 373.588-74.15 0-143.168-21.738-201.276-58.996 10.272 1.218 20.724 1.84 31.322 1.84 61.518 0 118.134-20.992 163.072-56.21-57.458-1.054-105.948-39.020-122.658-91.184 8.018 1.532 16.244 2.36 24.704 2.36 11.976 0 23.578-1.61 34.592-4.61-60.064-12.066-105.326-65.132-105.326-128.75 0-0.554 0-1.104 0.012-1.652 17.7 9.834 37.948 15.742 59.47 16.424-35.232-23.546-58.414-63.736-58.414-109.292 0-24.064 6.476-46.62 17.78-66.010 64.76 79.44 161.51 131.712 270.634 137.19-2.238-9.612-3.4-19.632-3.4-29.924 0-72.512 58.792-131.298 131.304-131.298 37.766 0 71.892 15.944 95.842 41.462 29.908-5.886 58.008-16.814 83.38-31.862-9.804 30.662-30.624 56.394-57.732 72.644 26.56-3.174 51.866-10.232 75.412-20.674-17.594 26.328-39.854 49.454-65.514 67.966z"></path>
+    </symbol>
+    <symbol id="icon-pinterest" viewBox="0 0 1024 1024">
+      <title>pinterest</title>
+      <path class="path1" d="M853.35 0h-682.704c-94.25 0-170.646 76.42-170.646 170.686v682.63c0 94.266 76.398 170.684 170.646 170.684h682.704c94.25 0 170.65-76.418 170.65-170.684v-682.63c0-94.266-76.4-170.686-170.65-170.686zM573.288 804.024c-51.886 0-100.652-26.958-117.35-58.796 0 0-25.674 97.766-31.896 121.71-11.562 44.468-42.766 100.218-63.64 134.226l-34.986-12.394c-4.478-40.508-8.518-102.644 1.774-146.876 9.298-39.954 60.040-254.5 60.040-254.5s-15.32-30.664-15.32-76.008c0-71.19 41.268-124.336 92.64-124.336 43.684 0 64.786 32.794 64.786 72.12 0 43.928-27.964 109.604-42.404 170.464-12.060 50.972 25.556 92.536 75.814 92.536 91.008 0 160.958-95.96 160.958-234.466 0-122.584-88.088-208.298-213.87-208.298-145.676 0-231.186 109.274-231.186 222.19 0 44.008 16.95 91.196 38.102 116.844 4.182 5.070 4.792 9.516 3.548 14.68-3.884 16.18-12.522 50.96-14.216 58.076-2.234 9.368-7.422 11.356-17.124 6.842-63.95-29.77-103.926-123.264-103.926-198.348 0-161.51 117.348-309.834 338.294-309.834 177.61 0 315.634 126.56 315.634 295.704 0.004 176.456-111.252 318.464-265.672 318.464z"></path>
+    </symbol>
+    <symbol id="icon-arrow_forward" viewBox="0 0 1024 1024">
+      <title>arrow_forward</title>
+      <path class="path1" d="M512 170l342 342-342 342-60-60 238-240h-520v-84h520l-238-240z"></path>
+    </symbol>
+  </defs>
+</svg>
+
+<div>
+
+
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-inner clearfix">
+        <div class="mobile-nav-top-bar">
+          <a class="nav-icons logo" title="Link to the homepage" href="/"><svg class="icon icon-od-logo"><use xlink:href="#icon-od-logo"></use></svg><svg class="icon icon-logo-text"><use xlink:href="#icon-logo-text"></use></svg></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#account-nav-mobile">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="account-nav-mobile">
+          <ul class="nav navbar-nav micro-mobile">
+            <li class="navbar-item-right right-side-items"
+                ui-route="/dashboard(.*)" ng-class="{active: $uiRoute}">
+              <a href="/open/dashboard"><span>account</span></a>
+            </li>
+            <li class="navbar-item-right right-side-items">
+              <a href="/basket"><span>Basket</span></a>
+            </li>
+
+            <li >
+              <a href="/designs"><span>Furniture</span></a>
+            </li>
+
+            <li >
+              <a href="/workspaces"><span>Workspaces</span></a>
+            </li>
+
+            <li id="js-main-nav-open-making-li"
+                ui-route="/(?!dashboard|basket|auth).*" ng-class="{active: $uiRoute}">
+              <a href="/open-making"><span>Open Making</span></a>
+            </li>
+            <script>
+              (function () {
+                var is_auth_page = window.location.pathname.indexOf('/open/auth') === 0;
+                var is_basket_page = window.location.pathname.indexOf('/open/basket') === 0;
+                var is_dashboard_page = window.location.pathname.indexOf('/open/dashboard') === 0;
+                if (is_auth_page || is_basket_page || is_dashboard_page) {
+                  $('.micro-mobile #js-main-nav-open-making-li').removeClass('active');
+                }
+              })();
+            </script>
+
+            <li class="active">
+              <a href="/blog"><span>Blog</span></a>
+            </li>
+
+            <li >
+              <a href="/contact"><span>Contact</span></a>
+            </li>
+          </ul>
+        </div>
+        <ul class="nav navbar-nav main-desktop">
+          <li class="desktop-logo">
+            <a class="nav-icons logo" title="Link to the homepage" href="/"><svg class="icon icon-od-logo"><use xlink:href="#icon-od-logo"></use></svg><svg class="icon icon-logo-text"><use xlink:href="#icon-logo-text"></use></svg></a>
+          </li>
+
+          <li >
+            <a href="/designs"><span>Furniture</span></a>
+          </li>
+
+          <li >
+            <a href="/workspaces"><span>Workspaces</span></a>
+          </li>
+
+          <li id="js-main-nav-open-making-li"
+              ui-route="/(?!dashboard|basket|auth).*" ng-class="{active: $uiRoute}">
+            <a href="/open-making"><span>Open Making</span></a>
+          </li>
+          <script>
+            (function () {
+              var is_auth_page = window.location.pathname.indexOf('/open/auth') === 0;
+              var is_basket_page = window.location.pathname.indexOf('/open/basket') === 0;
+              var is_dashboard_page = window.location.pathname.indexOf('/open/dashboard') === 0;
+              if (is_auth_page || is_basket_page || is_dashboard_page) {
+                $('.main-desktop #js-main-nav-open-making-li').removeClass('active');
+              }
+            })();
+          </script>
+
+          <li class="active">
+            <a href="/blog"><span>Blog</span></a>
+          </li>
+          <li class="navbar-item-right right-side-items">
+            <a href="/dashboard"><span>Your dashboard</span></a>
+          </li>
+          <li class="navbar-item-right right-side-items">
+            <a href="/basket"><span>Basket</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </nav>
+
+
+
+  <div class="container">
+    <header class="header-strap expanded">
+
+      <div class="header-strap-actions">
+        <div class="calls-to-action">
+          <div class="subscribe-widget">
+            <div class="js-li">
+
+              <div class="subscribe-widget-inner clearfix">
+
+                <a class="btn btn-lg btn-tertiary call-to-action-button subscribe-link" href="#subscribe">
+                  Subscribe</a>
+                <form class="form-inline hide">
+
+                  <input type="hidden" name="section" value="blog" />
+                  <div class="form-group">
+                    <label class="sr-only" for="email">
+                      Enter your email:
+                    </label>
+                    <div class="input-group call-to-action-input-group pull-right">
+                      <input type="email" name="email"
+                             class="form-control input-lg call-to-action-input"
+                             placeholder="Enter your email"
+                      />
+        <span class="input-group-btn">
+          <button class="btn btn-lg btn-tertiary call-to-action-button" type="submit">
+            Go »</button>
+        </span>
+                    </div>
+                  </div>
+                </form>
+                <a class="btn btn-lg btn-tertiary call-to-action-button disabled success-message hide">
+
+                  Subscribed successfully!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="header-strap-titles">
+        <div class="title header-strap">
+          <p><strong>Best reads in technical…</strong></p>
+
+        </div>
+      </div>
+
+      <h2 class="blog-secondary-strapline">
+
+      </h2>
+    </header>
+  </div>
+
+
+
+
+  <section class="tile-listings">
+    <div class="container large-space-below">
+      <div class="row">
+        <% @articles.each do |article| %>
+            <div class="col-sm-6 col-md-4">
+
+              <div class="new-tile blog-post-inline" data-template="templates/blog_post.html.cut">
+                <div class="row blog-post-div">
+                  <div class="col-md-12">
+                    <a href="<%= article_path(article) %>">
+                      <div class="blog-post-strap">
+                        <svg class="icon icon-arrow-forward"><use xlink:href="#icon-arrow_forward"></use></svg>
+                        <div class="blog-post-strap-overlay-background">
+
+                        </div>
+
+                        <%= link_to image_tag("tornio.tile.png"), article_path(article)%>
+
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="row blog-post-date">
+                  <div class="col-md-12">
+                    <p>
+                      <%= article.created_at.to_s(:long) %></time>
+                    </p>
+                  </div>
+                </div>
+                <div class="blog-post-text-size">
+                  <div class="row blog-post-div">
+                    <div class="col-md-12">
+                      <div class="blog-post-template-title">
+                        <a class="blog-link-hover"><%=link_to article.title, article_path(article) %></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row blog-post-div">
+                    <div class="col-md-12">
+                      <div class="h4 blog-post-div blog-post-strap-text">
+                        <%= article.body[0,200]+"..." %>
+                      </div>
+                      <p class="blog-post-continue-reading">
+                        <a class="blog-link-hover"><%= link_to 'Continue Reading...',article_path(article)%></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-outer">
+
+
+
+    <footer data-template="templates/partials/footer.html.cut">
+      <section class="inverted-colour-scheme">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+
+              <div class="footer-od-logo">
+                <a href="/">
+                  <img src="/assets/gfx/od-new-white-logo-0fd3532bb3f9f2e59a88bef696e24fde.png"
+                       alt="Opendesk"
+                  /></a>
+              </div>
+
+              <!--div class="footer-strap">
+                <div class="footer-strapline">
+                  <p>Kit out your workspace with open furniture — designed to be <a href="/open-making"><span class="no-wrap">made locally,</span> <span class="no-wrap">all around the world</span></a></p>
+
+                </div>
+
+              </div-->
+
+              <ul class="footer-tabs">
+
+                <li >
+                  <a href="/about">About</a>
+                </li>
+
+                <li >
+                  <a href="/contact">Contact</a>
+                </li>
+
+                <li >
+                  <a href="/faq">FAQ</a>
+                </li>
+
+                <li >
+                  <a href="/privacy">Privacy</a>
+                </li>
+
+                <li >
+                  <a href="/team">Team</a>
+                </li>
+
+                <li >
+                  <a href="/jobs">Jobs</a>
+                </li>
+
+                <li class="active">
+                  <a href="/blog">Blog</a>
+                </li>
+
+              </ul>
+              <ul class="footer-social clearfix">
+
+                <li tabindex="0" class="footer-social-twitter">
+                  <a tabindex="-1" href="https://twitter.com/open_desk" target="_blank" title="Follow @open_desk on Twitter">
+                    <svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
+                  </a>
+                </li>
+
+
+                <li tabindex="0" class="footer-social-facebook">
+                  <a tabindex="-1" href="https://www.facebook.com/opendesk.cc" target="_blank" title="Like Opendesk on Facebook">
+                    <svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
+                  </a>
+                </li>
+
+
+                <li tabindex="0" class="footer-social-instagram">
+                  <a tabindex="-1" href="https://instagram.com/open_desk" target="_blank" title="Follow Opendesk on Instagram">
+                    <svg class="icon icon-instagram"><use xlink:href="#icon-instagram"></use></svg>
+                  </a>
+                </li>
+
+
+                <li tabindex="0" class="footer-social-pintrest">
+                  <a tabindex="-1" href="https://www.pinterest.com/open_desk" target="_blank" title="Follow Opendesk on Pintrest">
+                    <svg class="icon icon-pinterest"><use xlink:href="#icon-pinterest"></use></svg>
+                  </a>
+                </li>
+
+
+                <li tabindex="0" class="footer-social-google-plus">
+                  <a tabindex="-1" href="https://plus.google.com/101523867501775687750/posts" target="_blank" title="Add Opendesk on Google+">
+                    <svg class="icon icon-google-plus"><use xlink:href="#icon-google-plus"></use></svg>
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="inverted-colour-scheme footer-feedback-form">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="simple-feedback js-simple-feedback">
+                <legend class="alert hide">
+                  Thanks! Your feedback has been sent successfully.
+                </legend>
+                <form>
+                  <legend>
+                    I wish Opendesk would:
+                  </legend>
+                  <div class="row">
+                    <div class="col-lg-offset-1 col-lg-10">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <input type="text" name="feedback" class="form-control input-lg"
+                                 placeholder="Let me do something I can’t do …"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" name="email" class="form-control input-lg"
+                                 placeholder="your@email.com"
+                          />
+                        </div>
+                        <div class="col-md-2">
+                          <div class="hidden-xs hidden-sm">
+                            <input type="submit" class="btn btn-lg btn-info btn-block"
+                                   value="Send »" />
+                          </div>
+                          <div class="visible-xs visible-sm">
+                            <input type="submit" class="btn btn-lg btn-info btn-block"
+                                   value="Send your feedback »" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </footer>
+
+
+
+
+  </div>
+</div>
+
+<script type="text/javascript" src="/assets/js/base-19dc9ced193dd2899e859aaca4d383b9.js"></script>
+<script type="text/javascript" src="/assets/js/client-02835827aeb25b07403e7fb9e5bb0b34.js"></script>
+
+<script type="text/javascript">
+  (function(w,f){
+    w[f]=(w[f]?w[f]:{}),w[f].api_base_url='https://www.opendesk.cc/api/v1';
+  }(window,'fabbed'));
+</script>
+
+
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyCaL19BqZgV_873uPE7813SbA7UtdiXv_g">
+</script>
+<script src="https://dpgnvl2ge5zqm.cloudfront.net/gzip.js.gz"></script>
+<script src="https://dpgnvl2ge5zqm.cloudfront.net/opendesk-client.js"></script>
+
+
+<script type="text/javascript">
+  window.od__load(['design'], 'design');
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.0.1";
+    analytics.load("KJtXWwHIX3wShCgtAi0VsBvfSEvMKmu4");
+    analytics.page()
+  }}();
+</script>
+<script type="text/javascript" src="/assets/js/cta_tracking-b708811625fe47afb3345d151583a8bd.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-36524643-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript"
+        src="//www.googleadservices.com/pagead/conversion_async.js">
+</script>
+<script type="text/javascript" src="//platform.twitter.com/oct.js">
+</script>
+<script type="text/javascript">
+  (function(h,o,t,j,a,r){
+    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+    h._hjSettings={hjid:96975,hjsv:5};
+    a=o.getElementsByTagName('head')[0];
+    r=o.createElement('script');r.async=1;
+    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+
+
+
+<script>
+  jQuery(function($) {
+    $.cookieConsent({
+      autoAccept: false,
+      message: 'Opendesk <a href=\"{infoHref}\">uses cookies<\/a>. <span class=\"cookie-consent-given\">By continuing to browse the site you’re agreeing to this.<\/span>',
+      infoHref:"/privacy#cookies"
+    });
+  });
+</script>
+
+
+
+
+</body>
+</html>
